@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Bush Guy ($BUSH)",
+  "description": "Premium Solana meme coin with luxury animations, a 1-billion locked supply, and massive growth potential for early investors.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
