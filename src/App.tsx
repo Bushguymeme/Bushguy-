@@ -29,6 +29,7 @@ import {
 import { BUSH_MOMENTS, EARLY_MATH_DATA, ROADMAP_DATA, FAQ_DATA, CONTRACT_ADDRESS, BUSH_GUY_IMAGES } from './data.ts';
 import { BushMomentId } from './types.ts';
 import ParticleCanvas from './components/ParticleCanvas.tsx';
+import CampfireCanvas from './components/CampfireCanvas.tsx';
 import { bushSynth } from './utils/audio.ts';
 
 export default function App() {
@@ -124,14 +125,14 @@ export default function App() {
     if (isAudioEnabled) {
       bushSynth.stop();
       setIsAudioEnabled(false);
-      showNotification('🔇 Campfire synth beats muted');
+      showNotification('🔇 Campfire crackles & ambient beats muted');
     } else {
       setIsAudioEnabled(true);
       // Give browser half-second to yield AudioContext
       setTimeout(() => {
         bushSynth.init();
         bushSynth.setMoment(activeMomentId);
-        showNotification('🔊 Campfire synth beats active! Crank up volume!');
+        showNotification('🔥 Campfire is burning! Continuous crackles & ambient beats active!');
       }, 50);
     }
   };
@@ -478,6 +479,19 @@ export default function App() {
                     <Copy className="w-3 h-3" />
                   </div>
                 </div>
+
+                <div className="mt-2.5 flex items-center justify-between">
+                  <a
+                    href="https://solscan.io/token/BSMF8NPcATgRTSk2a2VNUmXsZ8LfzwdVA21jULfypump?page=2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-solana-green/85 hover:text-solana-green transition-colors font-mono hover:underline group/link"
+                  >
+                    <span>View on Solscan Explorer</span>
+                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                  </a>
+                  <span className="text-[10px] font-mono text-stone-500">Solscan Verified</span>
+                </div>
               </div>
 
             </div>
@@ -712,6 +726,36 @@ export default function App() {
 
           </div>
 
+        </div>
+      </section>
+
+      {/* Standalone Campfire Code Animation Section */}
+      <section id="campfire-cinematic-loop" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-30">
+        <div className="bg-[#0a0a0a] border border-orange-500/10 rounded-3xl p-6 sm:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden">
+          {/* Subtle background glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none" />
+          
+          <div className="text-center max-w-2xl mx-auto mb-8 relative z-10">
+            <span className="px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-3">
+              🔥 LIVE DIGITAL HEARTH
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
+              BASK IN THE GLOW OF THE $BUSHGUY HEARTH
+            </h2>
+            <p className="mt-2 text-stone-400 text-sm">
+              Take a breather from the wild chart fluctuations. Rest by our fully synchronized digital campfire rendered entirely in dynamic, real-time code.
+            </p>
+          </div>
+
+          <div className="relative mx-auto max-w-3xl rounded-2xl overflow-hidden border border-amber-500/20 shadow-[0_0_50px_rgba(245,158,11,0.15)] bg-black" id="campfire-video-container">
+            <CampfireCanvas />
+            
+            {/* Interactive fire crackle indicator in corner */}
+            <div className="absolute bottom-4 right-4 bg-black/85 backdrop-blur-md border border-amber-500/30 rounded-full px-3.5 py-1.5 flex items-center gap-2 text-xs font-mono text-amber-500 z-20">
+              <span className="flex h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+              <span>LOOPS SEAMLESSLY</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1091,11 +1135,13 @@ export default function App() {
             </a>
             <span className="text-stone-700">|</span>
             <a 
-              href="#swap" 
-              className="hover:text-solana-green transition-colors"
-              onClick={() => showNotification("🗺️ Solscan Explorer links active soon!")}
+              href="https://solscan.io/token/BSMF8NPcATgRTSk2a2VNUmXsZ8LfzwdVA21jULfypump?page=2" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-solana-green transition-colors flex items-center gap-0.5"
             >
-              Solscan
+              <span>Solscan</span>
+              <ExternalLink className="w-2.5 h-2.5" />
             </a>
           </div>
 

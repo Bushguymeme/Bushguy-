@@ -13,6 +13,8 @@ class BushSynthEngine {
   private intervalId: number | null = null;
   private isRunning: boolean = false;
   private activeMoment: BushMomentId = 'chilling';
+  private campfireNoiseNode: AudioBufferSourceNode | null = null;
+  private campfireCracklerId: number | null = null;
 
   public init() {
     if (this.ctx) return;
@@ -24,6 +26,7 @@ class BushSynthEngine {
       this.masterGain.connect(this.ctx.destination);
       this.isRunning = true;
       this.startLoop();
+      this.startCampfire();
     } catch (e) {
       console.warn('Web Audio API not supported on this platform', e);
     }
@@ -48,6 +51,10 @@ class BushSynthEngine {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
+    if (this.campfireCracklerId) {
+      clearTimeout(this.campfireCracklerId);
+      this.campfireCracklerId = null;
+    }
     if (this.primaryOsc) {
       try { this.primaryOsc.stop(); } catch(e){}
       this.primaryOsc = null;
@@ -56,9 +63,109 @@ class BushSynthEngine {
       try { this.lfoOsc.stop(); } catch(e){}
       this.lfoOsc = null;
     }
+    if (this.campfireNoiseNode) {
+      try { this.campfireNoiseNode.stop(); } catch(e){}
+      this.campfireNoiseNode = null;
+    }
     if (this.ctx) {
       this.ctx.close();
       this.ctx = null;
+    }
+  }
+
+  private startCampfire() {
+    if (!this.ctx || !this.masterGain) return;
+
+    try {
+      // 1. Loop a generated white noise buffer for the fire hiss/roar
+      const bufferSize = this.ctx.sampleRate * 2; // 2 seconds of noise
+      const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const channelData = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        channelData[i] = Math.random() * 2 - 1;
+      }
+
+      this.campfireNoiseNode = this.ctx.createBufferSource();
+      this.campfireNoiseNode.buffer = noiseBuffer;
+      this.campfireNoiseNode.loop = true;
+
+      // Bandpass filter to shape noise to campfire warm hum/roar
+      const bandpassFilter = this.ctx.createBiquadFilter();
+      bandpassFilter.type = 'bandpass';
+      bandpassFilter.frequency.setValueAtTime(400, this.ctx.currentTime);
+      bandpassFilter.Q.setValueAtTime(1.5, this.ctx.currentTime);
+
+      // Lowpass filter to smooth high-end noise
+      const lowpassFilter = this.ctx.createBiquadFilter();
+      lowpassFilter.type = 'lowpass';
+      lowpassFilter.frequency.setValueAtTime(1500, this.ctx.currentTime);
+
+      // Gain node specifically for the continuous warm roar
+      const roarGain = this.ctx.createGain();
+      roarGain.gain.setValueAtTime(0.015, this.ctx.currentTime);
+
+      // Connect nodes
+      this.campfireNoiseNode.connect(bandpassFilter);
+      bandpassFilter.connect(lowpassFilter);
+      lowpassFilter.connect(roarGain);
+      roarGain.connect(this.masterGain);
+
+      this.campfireNoiseNode.start();
+
+      // 2. Micro-crackler scheduling loop for random pops/cracks
+      const scheduleCrackle = () => {
+        if (!this.ctx || !this.isRunning) return;
+
+        const time = this.ctx.currentTime;
+        // Schedule next pop randomly (between 40ms and 450ms)
+        const nextDelay = 40 + Math.random() * 410;
+
+        // Create high-frequency wood crack/pop
+        const popOsc = this.ctx.createOscillator();
+        const popGain = this.ctx.createGain();
+
+        popOsc.type = 'triangle';
+        // Random pitch centered around 1.5kHz - 3.5kHz
+        const pitch = 1400 + Math.random() * 2200;
+        popOsc.frequency.setValueAtTime(pitch, time);
+
+        // Extremely short attack & decay
+        const popDuration = 0.003 + Math.random() * 0.012;
+        popGain.gain.setValueAtTime(0.012 + Math.random() * 0.025, time);
+        popGain.gain.exponentialRampToValueAtTime(0.0001, time + popDuration);
+
+        popOsc.connect(popGain);
+        if (this.masterGain) popGain.connect(this.masterGain);
+
+        popOsc.start(time);
+        popOsc.stop(time + popDuration + 0.05);
+
+        // Occasional deeper low-mid pop (glowing ember popping)
+        if (Math.random() < 0.18) {
+          const emberOsc = this.ctx.createOscillator();
+          const emberGain = this.ctx.createGain();
+
+          emberOsc.type = 'sine';
+          emberOsc.frequency.setValueAtTime(120 + Math.random() * 90, time);
+          emberOsc.frequency.exponentialRampToValueAtTime(35, time + 0.09);
+
+          const emberDuration = 0.05 + Math.random() * 0.05;
+          emberGain.gain.setValueAtTime(0.03 + Math.random() * 0.035, time);
+          emberGain.gain.exponentialRampToValueAtTime(0.0001, time + emberDuration);
+
+          emberOsc.connect(emberGain);
+          if (this.masterGain) emberGain.connect(this.masterGain);
+
+          emberOsc.start(time);
+          emberOsc.stop(time + emberDuration + 0.05);
+        }
+
+        this.campfireCracklerId = window.setTimeout(scheduleCrackle, nextDelay);
+      };
+
+      scheduleCrackle();
+    } catch (err) {
+      console.error('Failed to synthesize continuous campfire sound:', err);
     }
   }
 
@@ -326,6 +433,76 @@ class BushSynthEngine {
     };
 
     this.intervalId = window.setInterval(playTick, loopDelay);
+  }
+
+  public triggerWoodThrow() {
+    if (!this.ctx || !this.isRunning || !this.masterGain) return;
+    
+    try {
+      const time = this.ctx.currentTime;
+
+      // 1. Wood crack sound
+      const snapOsc = this.ctx.createOscillator();
+      const snapGain = this.ctx.createGain();
+      snapOsc.type = 'triangle';
+      snapOsc.frequency.setValueAtTime(1400 + Math.random() * 800, time);
+      snapOsc.frequency.exponentialRampToValueAtTime(300, time + 0.05);
+
+      snapGain.gain.setValueAtTime(0.08, time);
+      snapGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.05);
+
+      snapOsc.connect(snapGain);
+      snapGain.connect(this.masterGain);
+      snapOsc.start(time);
+      snapOsc.stop(time + 0.06);
+
+      // 2. Flame WHOOSH poof sound (low frequency expand)
+      const whooshOsc = this.ctx.createOscillator();
+      const whooshGain = this.ctx.createGain();
+      whooshOsc.type = 'sine';
+      whooshOsc.frequency.setValueAtTime(160, time);
+      whooshOsc.frequency.exponentialRampToValueAtTime(45, time + 0.35);
+
+      whooshGain.gain.setValueAtTime(0.14, time);
+      whooshGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.35);
+
+      whooshOsc.connect(whooshGain);
+      whooshGain.connect(this.masterGain);
+      whooshOsc.start(time);
+      whooshOsc.stop(time + 0.4);
+    } catch (e) {
+      console.warn('Failed to trigger wood sound', e);
+    }
+  }
+
+  public triggerChopWood() {
+    if (!this.ctx || !this.isRunning || !this.masterGain) return;
+    try {
+      const time = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(1800, time);
+      osc.frequency.exponentialRampToValueAtTime(320, time + 0.07);
+      
+      const biquad = this.ctx.createBiquadFilter();
+      biquad.type = 'bandpass';
+      biquad.frequency.setValueAtTime(1100, time);
+      biquad.Q.setValueAtTime(4.5, time);
+      
+      osc.connect(biquad);
+      biquad.connect(gain);
+      gain.connect(this.masterGain);
+
+      gain.gain.setValueAtTime(0.07, time);
+      gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.08);
+
+      osc.start();
+      osc.stop(time + 0.09);
+    } catch (e) {
+      console.warn('Failed to play chop sound', e);
+    }
   }
 }
 

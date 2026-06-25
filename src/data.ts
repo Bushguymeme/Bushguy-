@@ -14,7 +14,7 @@ export const BUSH_GUY_IMAGES = {
   flexing: '/images/bush_guy_flexing_1782172379501.jpg',
 };
 
-export const CONTRACT_ADDRESS = 'BushGuy11111111111111111111111111111BScN';
+export const CONTRACT_ADDRESS = 'BSMF8NPcATgRTSk2a2VNUmXsZ8LfzwdVA21jULfypump';
 
 export const BUSH_MOMENTS: BushMoment[] = [
   {
