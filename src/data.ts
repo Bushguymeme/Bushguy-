@@ -6,12 +6,12 @@
 import { BushMoment, EarlyMathComparison, Milestone } from './types.ts';
 
 export const BUSH_GUY_IMAGES = {
-  logo: '/src/assets/images/bush_guy_logo_1782172312510.jpg',
-  chilling: '/src/assets/images/bush_guy_chilling_1782172327636.jpg',
-  slashing: '/src/assets/images/bush_guy_slashing_1782172339985.jpg',
-  ferrari: '/src/assets/images/bush_guy_ferrari_1782172353753.jpg',
-  swimming: '/src/assets/images/bush_guy_swimming_1782172366248.jpg',
-  flexing: '/src/assets/images/bush_guy_flexing_1782172379501.jpg',
+  logo: '/images/bush_guy_logo_1782172312510.jpg',
+  chilling: '/images/bush_guy_chilling_1782172327636.jpg',
+  slashing: '/images/bush_guy_slashing_1782172339985.jpg',
+  ferrari: '/images/bush_guy_ferrari_1782172353753.jpg',
+  swimming: '/images/bush_guy_swimming_1782172366248.jpg',
+  flexing: '/images/bush_guy_flexing_1782172379501.jpg',
 };
 
 export const CONTRACT_ADDRESS = 'BushGuy11111111111111111111111111111BScN';
