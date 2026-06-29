@@ -749,12 +749,6 @@ export default function App() {
 
           <div className="relative mx-auto max-w-3xl rounded-2xl overflow-hidden border border-amber-500/20 shadow-[0_0_50px_rgba(245,158,11,0.15)] bg-black" id="campfire-video-container">
             <CampfireCanvas />
-            
-            {/* Interactive fire crackle indicator in corner */}
-            <div className="absolute bottom-4 right-4 bg-black/85 backdrop-blur-md border border-amber-500/30 rounded-full px-3.5 py-1.5 flex items-center gap-2 text-xs font-mono text-amber-500 z-20">
-              <span className="flex h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>LOOPS SEAMLESSLY</span>
-            </div>
           </div>
         </div>
       </section>
