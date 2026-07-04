@@ -24,12 +24,12 @@ import {
   Heart,
   Droplet,
   Car,
-  Github
+  Github,
+  Gift
 } from 'lucide-react';
-import { BUSH_MOMENTS, EARLY_MATH_DATA, ROADMAP_DATA, FAQ_DATA, CONTRACT_ADDRESS, BUSH_GUY_IMAGES } from './data.ts';
+import { BUSH_MOMENTS, EARLY_MATH_DATA, ROADMAP_DATA, FAQ_DATA, BUSH_GUY_IMAGES, STRATEGIC_PARTNERS, FUTURE_LISTINGS } from './data.ts';
 import { BushMomentId } from './types.ts';
 import ParticleCanvas from './components/ParticleCanvas.tsx';
-import CampfireCanvas from './components/CampfireCanvas.tsx';
 import { bushSynth } from './utils/audio.ts';
 
 export default function App() {
@@ -38,6 +38,7 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [solInvestment, setSolInvestment] = useState<number>(5); // Default 5 SOL
+  const [activeTokenomicSegment, setActiveTokenomicSegment] = useState<'default' | 'presale' | 'lp' | 'other'>('default');
   
   // Custom states for notifications
   const [notification, setNotification] = useState<string | null>(null);
@@ -144,54 +145,8 @@ export default function App() {
     }, 4000);
   };
 
-  const fallbackCopyText = (text: string) => {
-    try {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.top = '0';
-      textArea.style.left = '0';
-      textArea.style.position = 'fixed';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      const successful = document.execCommand('copy');
-      document.body.removeChild(textArea);
-      if (successful) {
-        setCopied(true);
-        showNotification('📋 Solana Contract Address copied to clipboard!');
-        setTimeout(() => {
-          setCopied(false);
-        }, 2000);
-      } else {
-        showNotification('⚠️ Could not copy contract. Please copy manually!');
-      }
-    } catch (err) {
-      console.error('Fallback copy failed: ', err);
-      showNotification('⚠️ Could not copy contract. Please copy manually!');
-    }
-  };
-
-  const copyContractToClipboard = () => {
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-      navigator.clipboard.writeText(CONTRACT_ADDRESS)
-        .then(() => {
-          setCopied(true);
-          showNotification('📋 Solana Contract Address copied to clipboard!');
-          setTimeout(() => {
-            setCopied(false);
-          }, 2000);
-        })
-        .catch((err) => {
-          console.error('Failed to copy text: ', err);
-          fallbackCopyText(CONTRACT_ADDRESS);
-        });
-    } else {
-      fallbackCopyText(CONTRACT_ADDRESS);
-    }
-  };
-
-  // Math calculated outputs
-  const calculatedTokens = solInvestment * 10000000; // 10 Million BushGuy per Sol
+  // Math calculated outputs (690 Billion Supply, $100,000 starting market cap)
+  const calculatedTokens = Math.floor((solInvestment * solPrice * 690000000000) / 100000);
   
   // Trigger specific moments for demo
   const switchMoment = (id: BushMomentId) => {
@@ -206,7 +161,7 @@ export default function App() {
       <div className="bg-gradient-to-r from-emerald-950 via-[#122b13] to-emerald-950 border-b border-emerald-900/40 py-2.5 px-4 text-center text-xs relative z-50">
         <span className="inline-flex items-center gap-1.5 font-medium tracking-wide">
           <span className="flex h-2 w-2 rounded-full bg-solana-green animate-pulse" />
-          <strong className="text-solana-green font-semibold">ECO-SYSTEM ALERT:</strong> 1,000,000,000 $BUSHGUY. 100% Locked Liquidity & LP Burned on Raydium. No Pre-allocations! 🌾
+          <strong className="text-solana-green font-semibold">ECO-SYSTEM ALERT:</strong> 690,000,000,000 $BUSHGUY. 55% Presale, 35% LP Burned, 10% Growth & Partnerships! 🌾
         </span>
       </div>
 
@@ -285,7 +240,7 @@ export default function App() {
             </div>
 
             <a
-              href="https://drive.google.com/file/d/1eS0oSEPCBBXIXOwJQ07-60-7rghHhVrJ/view?usp=drivesdk"
+              href="https://drive.google.com/file/d/1-b-AlbWIX0XizzkrVeNqVzS1CtJRTvOD/view?usp=drivesdk"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-stone-900 border border-emerald-900/60 text-solana-green transition-all hover:bg-emerald-950/40 hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5"
@@ -296,10 +251,22 @@ export default function App() {
             </a>
 
             <a
-              href="#swap"
+              href="https://raydium.io/swap/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-solana-green/20"
             >
               Buy $BUSHGUY
+            </a>
+
+            <a
+              href="https://tally.so/r/LZy9MO"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-solana-green/20 flex items-center gap-1.5"
+            >
+              <Gift className="w-3.5 h-3.5 text-jungle-950 animate-bounce shrink-0" />
+              <span>Join SURCHI Airdrop</span>
             </a>
           </div>
 
@@ -425,7 +392,7 @@ export default function App() {
                   Deep in the digital jungle, where other meme tokens rug, freeze, and bite, <strong>Bush Guy</strong> sits comfortably in his hammock, completely safe. 
                 </p>
                 <p className="mt-3 text-stone-300 text-xs sm:text-sm leading-relaxed">
-                  No venture capital allocations. No insider developer wallets. Just an untamed wilderness force with 1 Billion tokens thrown straight to the wolves and locks melted permanently. Get yourself a bush hat, sit around our campfire, and let's ride.
+                  No venture capital allocations. No insider developer wallets. Just an untamed wilderness force with 690 Billion tokens carefully split for fair presale access, liquidity pool growth (burned LP), and strategic listings. Get yourself a bush hat, sit around our campfire, and let's ride.
                 </p>
 
                 {/* Specific active parameters based on dynamic selected theme */}
@@ -457,40 +424,62 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Solana Contract Address block */}
+              {/* Solana Contract Address block - Pending for Presale */}
               <div className="mt-6 pt-6 border-t border-emerald-950/80">
-                <div className="flex items-center justify-between text-xs font-mono mb-2 text-stone-400">
-                  <span>SOLANA CONTRACT ADDRESS:</span>
-                  {copied ? (
-                    <span className="text-solana-green text-[10px] font-bold">COPIED SUCCESSFULLY!</span>
-                  ) : (
-                    <span className="text-stone-500">TAP TOKEN TO COPY</span>
-                  )}
-                </div>
-                
-                <div 
-                  onClick={copyContractToClipboard}
-                  className="bg-stone-950/95 border border-stone-800 rounded-xl p-3 flex items-center justify-between gap-2 hover:border-solana-green/40 cursor-pointer transition-all active:scale-98 relative group"
-                >
-                  <span className="font-mono text-xs text-stone-300 overflow-hidden text-ellipsis whitespace-nowrap tracking-wide select-all">
-                    {CONTRACT_ADDRESS}
+                <div className="bg-stone-950/80 border border-stone-800 rounded-2xl p-4 text-center font-mono relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-xl pointer-events-none" />
+                  <span className="px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-[10px] font-bold uppercase tracking-wider inline-block mb-2 animate-pulse">
+                    ⚠️ Presale Pending Phase
                   </span>
-                  <div className="p-1 px-2.5 rounded bg-zinc-900 text-[10px] text-solana-green font-mono border border-zinc-800 flex items-center gap-1 group-hover:bg-solana-green group-hover:text-jungle-950 transition-colors">
-                    <Copy className="w-3 h-3" />
-                  </div>
-                </div>
+                  <h4 className="text-xs font-bold text-white tracking-tight uppercase mb-1">CONTRACT ADDRESS LAUNCHING SOON</h4>
+                  <p className="text-[11px] text-stone-400 leading-relaxed max-w-xs mx-auto mb-3">
+                    The official smart contract address will be deployed and locked live prior to the Pinksale Fair Launch event.
+                  </p>
 
-                <div className="mt-2.5 flex items-center justify-between">
-                  <a
-                    href="https://solscan.io/token/BSMF8NPcATgRTSk2a2VNUmXsZ8LfzwdVA21jULfypump?page=2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-solana-green/85 hover:text-solana-green transition-colors font-mono hover:underline group/link"
-                  >
-                    <span>View on Solscan Explorer</span>
-                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                  </a>
-                  <span className="text-[10px] font-mono text-stone-500">Solscan Verified</span>
+                  {/* Copyable Contract Address Placeholder Container */}
+                  <div className="mt-3 text-left">
+                    <div className="flex items-center justify-between text-[10px] text-stone-500 font-mono mb-1 px-1">
+                      <span>SOLANA CONTRACT:</span>
+                      {copied ? (
+                        <span className="text-solana-green font-bold animate-pulse">COPIED!</span>
+                      ) : (
+                        <span>TAP TO COPY PLACEHOLDER</span>
+                      )}
+                    </div>
+                    <div
+                      onClick={() => {
+                        const addr = "TBA (To Be Announced on Launch)";
+                        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                          navigator.clipboard.writeText(addr)
+                            .then(() => {
+                              setCopied(true);
+                              showNotification("📋 Contract placeholder copied!");
+                              setTimeout(() => setCopied(false), 2000);
+                            });
+                        } else {
+                          // Fallback copy
+                          const textArea = document.createElement('textarea');
+                          textArea.value = addr;
+                          textArea.style.position = 'fixed';
+                          document.body.appendChild(textArea);
+                          textArea.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(textArea);
+                          setCopied(true);
+                          showNotification("📋 Contract placeholder copied!");
+                          setTimeout(() => setCopied(false), 2000);
+                        }
+                      }}
+                      className="bg-stone-950 border border-stone-800 hover:border-solana-green/40 rounded-xl p-3 flex items-center justify-between gap-2 cursor-pointer transition-all active:scale-98 group/address"
+                    >
+                      <span className="text-xs text-stone-400 font-bold select-all truncate">
+                        TBA (To Be Announced on Launch)
+                      </span>
+                      <div className="p-1.5 rounded bg-zinc-900 text-stone-400 border border-zinc-800 flex items-center justify-center group-hover/address:bg-solana-green group-hover/address:text-jungle-950 transition-colors shrink-0">
+                        <Copy className="w-3.5 h-3.5" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -532,7 +521,7 @@ export default function App() {
                 <div className="bg-stone-950/80 border border-stone-800 rounded-2xl p-3.5">
                   <div className="flex justify-between text-[11px] font-mono text-stone-500 mb-1.5">
                     <span>YOU RECEIVE (ESTIMATE)</span>
-                    <span>10M tokens per SOL</span>
+                    <span>~{Math.floor((solPrice * 690000000000) / 100000).toLocaleString()} per SOL</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-base font-bold text-solana-green">$BUSHGUY</span>
@@ -637,7 +626,7 @@ export default function App() {
                   <span className="text-[10px] font-mono text-solana-green uppercase tracking-widest block mb-1">If $BUSHGUY hits WIF / BONK metrics ($1B Cap)</span>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-black text-solana-green">
-                      ${(calculatedTokens * 0.001).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      ${(calculatedTokens * 0.00144927536).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                     </span>
                     <span className="font-mono text-xs text-[#9945FF] font-bold">10,000x Multiplier!</span>
                   </div>
@@ -729,30 +718,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Standalone Campfire Code Animation Section */}
-      <section id="campfire-cinematic-loop" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-30">
-        <div className="bg-[#0a0a0a] border border-orange-500/10 rounded-3xl p-6 sm:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none" />
-          
-          <div className="text-center max-w-2xl mx-auto mb-8 relative z-10">
-            <span className="px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-3">
-              🔥 LIVE DIGITAL HEARTH
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
-              BASK IN THE GLOW OF THE $BUSHGUY HEARTH
-            </h2>
-            <p className="mt-2 text-stone-400 text-sm">
-              Take a breather from the wild chart fluctuations. Rest by our fully synchronized digital campfire rendered entirely in dynamic, real-time code.
-            </p>
-          </div>
-
-          <div className="relative mx-auto max-w-3xl rounded-2xl overflow-hidden border border-amber-500/20 shadow-[0_0_50px_rgba(245,158,11,0.15)] bg-black" id="campfire-video-container">
-            <CampfireCanvas />
-          </div>
-        </div>
-      </section>
-
       {/* Dynamic Tokenomics Segment with compass circle chart */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-30">
         <div className="text-center max-w-2xl mx-auto mb-12">
@@ -781,7 +746,7 @@ export default function App() {
                 {/* Outer spinning compass card compass marker */}
                 <div className="absolute inset-0 rounded-full border border-dashed border-emerald-800/60 animate-spin-slow pointer-events-none" />
 
-                {/* Main full-circle SVG Pie chart represent 100% Locked Liquidity */}
+                {/* Main full-circle SVG Pie chart represent the token distribution */}
                 <svg className="w-full h-full transform -rotate-90 select-none" viewBox="0 0 100 100">
                   {/* Backdrop Track track representing total empty circle */}
                   <circle
@@ -792,18 +757,50 @@ export default function App() {
                     strokeWidth="12"
                     fill="transparent"
                   />
-                  {/* Solana Locked Burn segment (100%) */}
+                  {/* Presale segment (55%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    stroke="#9945FF"
+                    strokeWidth={activeTokenomicSegment === 'presale' ? 14 : 12}
+                    strokeDasharray="138.2 251.3"
+                    strokeDashoffset="0"
+                    strokeLinecap="round"
+                    className="cursor-pointer transition-all duration-300 hover:stroke-[#b266ff]"
+                    fill="transparent"
+                    onMouseEnter={() => setActiveTokenomicSegment('presale')}
+                    onMouseLeave={() => setActiveTokenomicSegment('default')}
+                  />
+                  {/* Solana Locked Burn segment (35%) */}
                   <circle
                     cx="50"
                     cy="50"
                     r="40"
                     stroke="#14F195"
-                    strokeWidth="12"
-                    strokeDasharray="251.2"
-                    strokeDashoffset="0"
+                    strokeWidth={activeTokenomicSegment === 'lp' ? 14 : 12}
+                    strokeDasharray="88.0 251.3"
+                    strokeDashoffset="-138.2"
                     strokeLinecap="round"
-                    className="cursor-pointer transition-all duration-500 hover:stroke-[#9945FF]"
+                    className="cursor-pointer transition-all duration-300 hover:stroke-[#39f7ab]"
                     fill="transparent"
+                    onMouseEnter={() => setActiveTokenomicSegment('lp')}
+                    onMouseLeave={() => setActiveTokenomicSegment('default')}
+                  />
+                  {/* DEX, Dev, Marketing & Partnership (10%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    stroke="#fbbf24"
+                    strokeWidth={activeTokenomicSegment === 'other' ? 14 : 12}
+                    strokeDasharray="25.1 251.3"
+                    strokeDashoffset="-226.2"
+                    strokeLinecap="round"
+                    className="cursor-pointer transition-all duration-300 hover:stroke-[#fcd34d]"
+                    fill="transparent"
+                    onMouseEnter={() => setActiveTokenomicSegment('other')}
+                    onMouseLeave={() => setActiveTokenomicSegment('default')}
                   />
                   
                   {/* Compass cardinal lines */}
@@ -814,11 +811,40 @@ export default function App() {
                 </svg>
 
                 {/* Inner Compass Glass Face floating elements */}
-                <div className="absolute inset-16 rounded-full bg-stone-950/95 border-2 border-stone-800 flex flex-col items-center justify-center text-center shadow-2xl p-4 z-20">
-                  <Compass className="w-7 h-7 text-solana-green mb-1 animate-spin-slow" />
-                  <span className="text-[10px] font-mono text-zinc-550 uppercase tracking-widest block text-stone-500">LIQUIDITY STATUS</span>
-                  <span className="text-xl font-bold font-display text-white mt-1">100% LOCK</span>
-                  <span className="text-[9px] font-mono text-solana-green tracking-tight font-extrabold uppercase mt-0.5">🔥 MELTED FOREVER</span>
+                <div className="absolute inset-16 rounded-full bg-stone-950/95 border-2 border-stone-800 flex flex-col items-center justify-center text-center shadow-2xl p-3 z-20 transition-all duration-300">
+                  <Compass className="w-5 h-5 text-solana-green mb-1 animate-spin-slow" />
+                  
+                  {activeTokenomicSegment === 'default' && (
+                    <>
+                      <span className="text-[9px] font-mono uppercase tracking-widest block text-stone-500">690B SUPPLY</span>
+                      <span className="text-sm font-bold font-display text-white mt-0.5">BUSHGUY MAP</span>
+                      <span className="text-[8px] font-mono text-solana-green tracking-tight font-extrabold uppercase mt-0.5">🔥 35% LP BURNED</span>
+                    </>
+                  )}
+
+                  {activeTokenomicSegment === 'presale' && (
+                    <>
+                      <span className="text-[9px] font-mono text-[#9945FF] uppercase tracking-widest block font-bold">55% PRESALE</span>
+                      <span className="text-xs font-bold font-display text-white mt-0.5">379.5B TOKENS</span>
+                      <span className="text-[8px] font-mono text-stone-400 tracking-tight uppercase mt-0.5">Fair Launch Alloc</span>
+                    </>
+                  )}
+
+                  {activeTokenomicSegment === 'lp' && (
+                    <>
+                      <span className="text-[9px] font-mono text-solana-green uppercase tracking-widest block font-bold">35% LP</span>
+                      <span className="text-xs font-bold font-display text-white mt-0.5">241.5B TOKENS</span>
+                      <span className="text-[8px] font-mono text-solana-green tracking-tight font-extrabold uppercase mt-0.5">🔥 100% LP BURN</span>
+                    </>
+                  )}
+
+                  {activeTokenomicSegment === 'other' && (
+                    <>
+                      <span className="text-[9px] font-mono text-amber-500 uppercase tracking-widest block font-bold">10% ALLOC</span>
+                      <span className="text-xs font-bold font-display text-white mt-0.5">69B TOKENS</span>
+                      <span className="text-[8px] font-mono text-stone-400 tracking-tight uppercase mt-0.5">Listings & Dev</span>
+                    </>
+                  )}
                 </div>
 
                 {/* Compass Needle marker points indicating Solana LP block */}
@@ -827,14 +853,42 @@ export default function App() {
               </div>
 
               {/* Informative labels adjacent to gauge */}
-              <div className="mt-6 text-center">
-                <p className="text-sm text-stone-200 font-semibold flex items-center gap-1.5 justify-center">
-                  <span className="inline-block w-3 h-3 rounded-full bg-solana-green" /> 
-                  1 Billion Supply (100% Liquidity Pool Deposit)
-                </p>
-                <p className="text-xs text-stone-400 mt-1.5 font-mono">
-                  There is zero token allocation left outside, no marketing split.
-                </p>
+              <div className="mt-6 space-y-3.5 w-full max-w-sm px-4">
+                <div 
+                  className={`flex items-center justify-between p-2.5 rounded-xl transition-all border ${activeTokenomicSegment === 'presale' ? 'bg-[#9945FF]/10 border-[#9945FF]/30' : 'border-transparent bg-stone-950/20'}`}
+                  onMouseEnter={() => setActiveTokenomicSegment('presale')}
+                  onMouseLeave={() => setActiveTokenomicSegment('default')}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-[#9945FF] block animate-pulse" />
+                    <span className="text-xs text-stone-200 font-semibold">Presale</span>
+                  </div>
+                  <span className="text-xs font-mono text-stone-400 font-bold">55% (379.5B)</span>
+                </div>
+
+                <div 
+                  className={`flex items-center justify-between p-2.5 rounded-xl transition-all border ${activeTokenomicSegment === 'lp' ? 'bg-solana-green/10 border-solana-green/30' : 'border-transparent bg-stone-950/20'}`}
+                  onMouseEnter={() => setActiveTokenomicSegment('lp')}
+                  onMouseLeave={() => setActiveTokenomicSegment('default')}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-solana-green block animate-pulse" />
+                    <span className="text-xs text-stone-200 font-semibold">Liquidity Pool</span>
+                  </div>
+                  <span className="text-xs font-mono text-solana-green font-bold">35% (241.5B)</span>
+                </div>
+
+                <div 
+                  className={`flex items-center justify-between p-2.5 rounded-xl transition-all border ${activeTokenomicSegment === 'other' ? 'bg-amber-500/10 border-amber-500/30' : 'border-transparent bg-stone-950/20'}`}
+                  onMouseEnter={() => setActiveTokenomicSegment('other')}
+                  onMouseLeave={() => setActiveTokenomicSegment('default')}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-amber-500 block animate-pulse" />
+                    <span className="text-xs text-stone-200 font-semibold">DEX, Dev, Mktg & Partners</span>
+                  </div>
+                  <span className="text-xs font-mono text-stone-400 font-bold">10% (69B)</span>
+                </div>
               </div>
 
             </div>
@@ -843,33 +897,33 @@ export default function App() {
             <div className="space-y-5">
               <h3 className="font-display font-extrabold text-2xl text-white">THE TOKENS BREAKDOWN</h3>
               <p className="text-stone-400 text-sm leading-relaxed">
-                Most coins allocate massive reserves for advisors or "future marketing projects", which invariably get liquidated onto retail purchasers. Under Bush Guy laws, the entire asset base (100%) resides within the Raydium liquidity map. 
+                Most coins allocate massive reserves for advisors or hidden "future marketing projects" which get liquidated onto the public. Under Bush Guy laws, the asset base is meticulously split for fair distribution and long-term liquidity.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 <div className="p-4 rounded-xl bg-stone-950/80 border border-stone-800">
-                  <span className="text-[10px] font-mono text-stone-550 block text-stone-550">TOTAL SUPPLY SUPPLY:</span>
-                  <p className="text-lg font-bold text-white font-display mt-0.5">1,000,000,000 Token</p>
+                  <span className="text-[10px] font-mono text-stone-400 block">TOTAL SUPPLY:</span>
+                  <p className="text-lg font-bold text-white font-display mt-0.5">690,000,000,000</p>
                   <p className="text-[10px] text-solana-green font-mono block mt-1">✓ Verified Solid Cap</p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-stone-950/80 border border-stone-800">
-                  <span className="text-[10px] font-mono text-stone-550 block text-stone-550">CIRCULATING SUPPLY:</span>
-                  <p className="text-lg font-bold text-white font-display mt-0.5">1,000,000,000 Token</p>
-                  <p className="text-[10px] text-solana-green font-mono block mt-1">✓ 100% Circulating</p>
+                  <span className="text-[10px] font-mono text-stone-400 block">PRESALE allocation:</span>
+                  <p className="text-lg font-bold text-white font-display mt-0.5">379,500,000,000</p>
+                  <p className="text-[10px] text-[#9945FF] font-mono block mt-1">✓ 55% Secure Presale</p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-stone-950/80 border border-stone-800">
-                  <span className="text-[10px] font-mono text-stone-550 block text-stone-550">TAX STRUCTURING FEE:</span>
-                  <p className="text-lg font-bold text-white font-display mt-0.5">0% BUY / SELL TAX</p>
-                  <p className="text-[10px] text-solana-green font-mono block mt-1">✓ No hidden drain rules</p>
+                  <span className="text-[10px] font-mono text-stone-400 block">LIQUIDITY POOL:</span>
+                  <p className="text-lg font-bold text-white font-display mt-0.5">241,500,000,000</p>
+                  <p className="text-[10px] text-solana-green font-mono block mt-1">✓ 35% LP Burned Forever</p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-stone-950/80 border border-stone-800">
-                  <span className="text-[10px] font-mono text-stone-550 block text-stone-550">MINT AUTHORITY:</span>
-                  <p className="text-lg font-bold text-white font-display mt-0.5">COMPLETELY REVOKED</p>
-                  <p className="text-[10px] text-solana-green font-mono block mt-1">✓ Cannot create more coins</p>
+                  <span className="text-[10px] font-mono text-stone-400 block">DEV, MKTG & LISTINGS:</span>
+                  <p className="text-lg font-bold text-white font-display mt-0.5">69,000,000,000</p>
+                  <p className="text-[10px] text-amber-500 font-mono block mt-1">✓ 10% Listings & growth</p>
                 </div>
 
               </div>
@@ -880,7 +934,7 @@ export default function App() {
                 <div>
                   <h4 className="text-white text-xs font-bold uppercase tracking-wider">LOCKED & DEFUNCT SECURE COMPASS CONTRACT</h4>
                   <p className="text-stone-350 text-xs mt-0.5">
-                    Solana explorer locks have been melted completely. Liquidity pool tokens are sent to Solana system black-hole wallet address. Zero chance of pull or team dumping!
+                    Solana explorer locks have been melted completely. Liquidity pool tokens are sent to Solana system black-hole wallet address. Zero chance of team dumping!
                   </p>
                 </div>
               </div>
@@ -889,6 +943,122 @@ export default function App() {
 
           </div>
         </div>
+      </section>
+
+      {/* Strategic Partners & Future Listing Hub */}
+      <section id="partners-listings" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-30 border-t border-emerald-950/20">
+        
+        {/* Header container */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-xs font-mono tracking-widest uppercase inline-block mb-3 animate-pulse">
+            🤝 Wilderness Alliances
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+            STRATEGIC PARTNERS & FUTURE LISTINGS
+          </h2>
+          <p className="mt-3 text-stone-300 text-sm leading-relaxed">
+            Uniting with leading decentralized platforms and global exchanges to fuel the $BUSHGUY expansion throughout the digital jungle.
+          </p>
+        </div>
+
+        {/* 1. STRATEGIC PARTNERS (Pinksale & Dexview) - Large prominent bento grids */}
+        <div className="mb-16">
+          <div className="flex items-center gap-2 mb-6 border-b border-stone-800/60 pb-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-solana-green animate-pulse" />
+            <h3 className="text-lg font-display font-extrabold text-stone-200 tracking-wider uppercase">
+              Strategic Launch Alliances
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {STRATEGIC_PARTNERS.map((partner) => (
+              <a
+                key={partner.name}
+                href={partner.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-6 sm:p-8 rounded-3xl bg-stone-900/40 border border-stone-800/60 hover:border-solana-green/40 transition-all duration-300 overflow-hidden flex flex-col sm:flex-row gap-5 items-start cursor-pointer hover:bg-stone-900/60"
+              >
+                {/* Visual hover glow background */}
+                <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-solana-green/5 rounded-full blur-[40px] pointer-events-none group-hover:bg-solana-green/10 transition-colors duration-300" />
+                
+                {/* Logo wrapper */}
+                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center p-2.5 shadow-xl border border-stone-800/80 shrink-0 overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    className="w-full h-full object-contain filter"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = `https://www.google.com/s2/favicons?sz=128&domain=${partner.domain}`;
+                    }}
+                  />
+                </div>
+
+                {/* Content details */}
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-display font-extrabold text-white tracking-tight flex items-center gap-1.5">
+                      {partner.name}
+                      <span className="text-xs font-mono text-stone-500 font-normal">({partner.domain})</span>
+                    </span>
+                    <ExternalLink className="w-4 h-4 text-stone-500 group-hover:text-solana-green transition-colors" />
+                  </div>
+                  <p className="text-stone-300 text-sm leading-relaxed">
+                    {partner.description}
+                  </p>
+                  <div className="pt-2 flex items-center gap-1 text-xs text-solana-green font-mono font-semibold">
+                    <span>Explore Platform</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* 2. FUTURE LISTING PARTNERS (Binance, Bybit, OKX, etc.) - Dynamic grid of smaller elegant logos */}
+        <div>
+          <div className="flex items-center gap-2 mb-6 border-b border-stone-800/60 pb-3">
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse" />
+            <h3 className="text-lg font-display font-extrabold text-stone-200 tracking-wider uppercase">
+              Target Future Listings & Exchanges
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {FUTURE_LISTINGS.map((exchange) => (
+              <div
+                key={exchange.name}
+                className="group relative p-4 rounded-2xl bg-stone-900/20 border border-stone-800/40 hover:border-amber-500/30 transition-all duration-300 flex flex-col items-center justify-center text-center gap-3 h-28 hover:bg-stone-900/40"
+              >
+                {/* Tiny target indicator */}
+                <span className="absolute top-2 right-2 text-[9px] font-mono text-stone-600 group-hover:text-amber-500 transition-colors font-semibold uppercase">
+                  TARGET
+                </span>
+
+                {/* Logo wrapper */}
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-2 shadow-md border border-stone-800 shrink-0 overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={exchange.logo}
+                    alt={`${exchange.name} logo`}
+                    className="w-full h-full object-contain"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = `https://www.google.com/s2/favicons?sz=128&domain=${exchange.domain}`;
+                    }}
+                  />
+                </div>
+
+                {/* Name */}
+                <span className="text-xs font-mono font-bold text-stone-300 group-hover:text-white transition-colors">
+                  {exchange.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </section>
 
       {/* Campaign milestones (The Roadmap trail) */}
@@ -1039,7 +1209,7 @@ export default function App() {
             </div>
 
             <a
-              href="https://drive.google.com/file/d/1eS0oSEPCBBXIXOwJQ07-60-7rghHhVrJ/view?usp=drivesdk"
+              href="https://drive.google.com/file/d/1-b-AlbWIX0XizzkrVeNqVzS1CtJRTvOD/view?usp=drivesdk"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 px-8 py-3.5 bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 font-extrabold rounded-2xl uppercase tracking-wider text-xs hover:scale-105 active:scale-95 transition-all shadow-lg shadow-solana-green/20 flex items-center gap-2 group"
@@ -1084,7 +1254,7 @@ export default function App() {
 
           <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-stone-400">
             <a 
-              href="https://drive.google.com/file/d/1eS0oSEPCBBXIXOwJQ07-60-7rghHhVrJ/view?usp=drivesdk"
+              href="https://drive.google.com/file/d/1-b-AlbWIX0XizzkrVeNqVzS1CtJRTvOD/view?usp=drivesdk"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-solana-green transition-colors flex items-center gap-1.5 font-bold text-solana-green"
@@ -1105,7 +1275,9 @@ export default function App() {
             </a>
             <span className="text-stone-700">|</span>
             <a 
-              href="#swap" 
+              href="https://raydium.io/swap/" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-solana-green transition-colors"
               onClick={() => showNotification("⛺ Welcome to our Raydium Pool camp!")}
             >
@@ -1126,16 +1298,6 @@ export default function App() {
               onClick={() => showNotification("💬 Enter the Telegram Basecamp Chat!")}
             >
               Telegram Chat
-            </a>
-            <span className="text-stone-700">|</span>
-            <a 
-              href="https://solscan.io/token/BSMF8NPcATgRTSk2a2VNUmXsZ8LfzwdVA21jULfypump?page=2" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-solana-green transition-colors flex items-center gap-0.5"
-            >
-              <span>Solscan</span>
-              <ExternalLink className="w-2.5 h-2.5" />
             </a>
           </div>
 

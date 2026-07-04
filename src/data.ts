@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BushMoment, EarlyMathComparison, Milestone } from './types.ts';
+import { BushMoment, EarlyMathComparison, Milestone, StrategicPartner, FutureListing } from './types.ts';
 
 export const BUSH_GUY_IMAGES = {
   logo: '/images/bush_guy_logo_1782172312510.jpg',
@@ -13,8 +13,6 @@ export const BUSH_GUY_IMAGES = {
   swimming: '/images/bush_guy_swimming_1782172366248.jpg',
   flexing: '/images/bush_guy_flexing_1782172379501.jpg',
 };
-
-export const CONTRACT_ADDRESS = 'BSMF8NPcATgRTSk2a2VNUmXsZ8LfzwdVA21jULfypump';
 
 export const BUSH_MOMENTS: BushMoment[] = [
   {
@@ -87,7 +85,7 @@ export const BUSH_MOMENTS: BushMoment[] = [
 export const EARLY_MATH_DATA: EarlyMathComparison[] = [
   {
     stage: 'Now (Ground Floor)',
-    price: '$0.00000010',
+    price: '$0.0000001449',
     marketCap: '$100,000 (Tiny Microcap)',
     multiplier: '1x',
     outcome: '$100 Investment',
@@ -95,7 +93,7 @@ export const EARLY_MATH_DATA: EarlyMathComparison[] = [
   },
   {
     stage: 'Viral Organic Shilling',
-    price: '$0.00000100',
+    price: '$0.0000014493',
     marketCap: '$1,000,000 (1M Cap)',
     multiplier: '10x',
     outcome: '$1,000 (Free camping gear!)',
@@ -103,7 +101,7 @@ export const EARLY_MATH_DATA: EarlyMathComparison[] = [
   },
   {
     stage: 'Solana Ecosystem Spotlight',
-    price: '$0.00001000',
+    price: '$0.0000144928',
     marketCap: '$10,000,000 (10M Cap)',
     multiplier: '100x',
     outcome: '$10,000 (Real bush jacuzzi!)',
@@ -111,7 +109,7 @@ export const EARLY_MATH_DATA: EarlyMathComparison[] = [
   },
   {
     stage: 'Tier 1 Central Exchange Listing',
-    price: '$0.00010000',
+    price: '$0.0001449275',
     marketCap: '$100,000,000 (100M Cap)',
     multiplier: '1,000x',
     outcome: '$100,000 (Buy a nice Jeep!)',
@@ -119,7 +117,7 @@ export const EARLY_MATH_DATA: EarlyMathComparison[] = [
   },
   {
     stage: 'Global Culture Icon ($WIF / $BONK tier)',
-    price: '$0.00100000',
+    price: '$0.0014492753',
     marketCap: '$1,000,000,000 (1 Billion)',
     multiplier: '10,000x',
     outcome: '$1,000,000 (GENUINE RETIREMENT!)',
@@ -134,9 +132,9 @@ export const ROADMAP_DATA: Milestone[] = [
     status: 'completed',
     items: [
       'Concept birth & drawing Bush Guy in his forest camp',
-      'Deploy $BUSHGUY on Solana Blockchain (1 Billion Supply)',
-      '100% of supply deposited to Raydium LP',
-      'Contract keys burned in campfire (Zero Mint/Freeze authority)',
+      'Deploy $BUSHGUY on Solana Blockchain (690 Billion Supply)',
+      '55% allocated to Presale & 35% to Liquidity Pool',
+      '10% reserved for DEX listings, Development, Marketing & Partnerships',
       'Liquidity pool LP burned forever'
     ]
   },
@@ -178,11 +176,11 @@ export const ROADMAP_DATA: Milestone[] = [
 export const FAQ_DATA = [
   {
     question: 'What is the contract address?',
-    answer: 'The official contract on Solana is pending final pool launch, during the presale/stealth phase we use our emblem contract: ' + CONTRACT_ADDRESS + '. Always check official channels!'
+    answer: 'The official contract on Solana is pending final pool launch on Pinksale. It will be officially deployed and announced across our official community channels (Telegram/Twitter/X) prior to the fair launch event. Always verify using pinned messages!'
   },
   {
-    question: 'Is the liquidity and supply really 100% burned?',
-    answer: 'Absolutely. Every single coin (1 Billion total) was thrown directly into the liquidity pool and the LP tokens have been permanently burned. There is zero team allocation, zero tax, and zero developer reserve. A pure, untamed, democratic wilderness play!'
+    question: 'What is the token distribution and supply?',
+    answer: 'The total supply of $BUSHGUY is 690,000,000,000 (690 Billion). The distribution is carefully designed for sustainable growth: 55% for the Presale, 35% for the Liquidity Pool (with LP tokens burned permanently), and 10% reserved for DEX listing, development, marketing, and strategic partnerships.'
   },
   {
     question: 'How do I buy $BUSHGUY?',
@@ -193,3 +191,37 @@ export const FAQ_DATA = [
     answer: 'Meme coins thrive on momentum. Buying at a $100K market cap versus a $100M market cap is a 1,000x difference in growth potential. By the time it hits major exchanges, early builders are already cruising in Ferraris, while latecomers are buying their exits!'
   }
 ];
+
+export const STRATEGIC_PARTNERS: StrategicPartner[] = [
+  {
+    name: 'Pinksale',
+    domain: 'pinksale.finance',
+    url: 'https://www.pinksale.finance',
+    logo: 'https://logo.clearbit.com/pinksale.finance',
+    description: 'The ultimate launchpad for decentralized assets, hosting our fair launch presale event with premium contract auditing and liquidity lock validation.'
+  },
+  {
+    name: 'Dexview',
+    domain: 'dexview.com',
+    url: 'https://www.dexview.com',
+    logo: 'https://logo.clearbit.com/dexview.com',
+    description: 'Advanced real-time charts, decentralized trade routing, and algorithmic telemetry tracking for $BUSHGUY on the Solana blockchain.'
+  }
+];
+
+export const FUTURE_LISTINGS: FutureListing[] = [
+  { name: 'Binance', domain: 'binance.com', logo: 'https://logo.clearbit.com/binance.com' },
+  { name: 'Bybit', domain: 'bybit.com', logo: 'https://logo.clearbit.com/bybit.com' },
+  { name: 'OKX', domain: 'okx.com', logo: 'https://logo.clearbit.com/okx.com' },
+  { name: 'Bitget', domain: 'bitget.com', logo: 'https://logo.clearbit.com/bitget.com' },
+  { name: 'KuCoin', domain: 'kucoin.com', logo: 'https://logo.clearbit.com/kucoin.com' },
+  { name: 'Gate.io', domain: 'gate.io', logo: 'https://logo.clearbit.com/gate.io' },
+  { name: 'MEXC', domain: 'mexc.com', logo: 'https://logo.clearbit.com/mexc.com' },
+  { name: 'HTX', domain: 'htx.com', logo: 'https://logo.clearbit.com/htx.com' },
+  { name: 'BitMart', domain: 'bitmart.com', logo: 'https://logo.clearbit.com/bitmart.com' },
+  { name: 'CoinEx', domain: 'coinex.com', logo: 'https://logo.clearbit.com/coinex.com' },
+  { name: 'LBank', domain: 'lbank.com', logo: 'https://logo.clearbit.com/lbank.com' },
+  { name: 'XT.com', domain: 'xt.com', logo: 'https://logo.clearbit.com/xt.com' },
+  { name: 'BingX', domain: 'bingx.com', logo: 'https://logo.clearbit.com/bingx.com' }
+];
+

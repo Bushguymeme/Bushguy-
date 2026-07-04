@@ -34,3 +34,18 @@ export interface Milestone {
   status: 'completed' | 'active' | 'upcoming';
   items: string[];
 }
+
+export interface StrategicPartner {
+  name: string;
+  domain: string;
+  url: string;
+  logo: string;
+  description: string;
+}
+
+export interface FutureListing {
+  name: string;
+  domain: string;
+  logo: string;
+}
+
