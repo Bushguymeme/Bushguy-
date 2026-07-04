@@ -260,6 +260,16 @@ export default function App() {
             </a>
 
             <a
+              href="https://www.pinksale.finance/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-solana-green/20 flex items-center gap-1.5"
+            >
+              <Flame className="w-3.5 h-3.5 text-jungle-950 animate-pulse shrink-0" />
+              <span>Pinksale Presale</span>
+            </a>
+
+            <a
               href="https://tally.so/r/LZy9MO"
               target="_blank"
               rel="noopener noreferrer"
@@ -626,7 +636,7 @@ export default function App() {
                   <span className="text-[10px] font-mono text-solana-green uppercase tracking-widest block mb-1">If $BUSHGUY hits WIF / BONK metrics ($1B Cap)</span>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-black text-solana-green">
-                      ${(calculatedTokens * 0.00144927536).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      ${(calculatedTokens * (1000000000 / 690000000000)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                     </span>
                     <span className="font-mono text-xs text-[#9945FF] font-bold">10,000x Multiplier!</span>
                   </div>
@@ -678,7 +688,10 @@ export default function App() {
                   </thead>
                   <tbody className="divide-y divide-zinc-800">
                     {EARLY_MATH_DATA.map((row, idx) => {
-                      const computedSolOut = calculatedTokens * parseFloat(row.price.replace('$', ''));
+                      const mcValues = [100000, 1000000, 10000000, 100000000, 1000000000];
+                      const mcValue = mcValues[idx];
+                      const exactPrice = mcValue / 690000000000;
+                      const computedSolOut = calculatedTokens * exactPrice;
                       return (
                         <tr 
                           key={idx} 
@@ -690,7 +703,7 @@ export default function App() {
                             {row.stage}
                           </td>
                           <td className="p-3.5 text-stone-300">{row.marketCap.split(' (')[0]}</td>
-                          <td className="p-3.5 text-stone-400">{row.price}</td>
+                          <td className="p-3.5 text-stone-400">${exactPrice.toFixed(10)}</td>
                           <td className="p-3.5 font-bold text-white">
                             ${computedSolOut.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                           </td>
