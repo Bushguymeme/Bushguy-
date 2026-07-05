@@ -270,7 +270,7 @@ export default function App() {
             </a>
 
             <a
-              href="https://tally.so/r/LZy9MO"
+              href="/airdrop.html"
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-solana-green/20 flex items-center gap-1.5"
@@ -1298,7 +1298,9 @@ export default function App() {
             </a>
             <span className="text-stone-700">|</span>
             <a 
-              href="#swap" 
+              href="https://x.com/Bushguymeme" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-solana-green transition-colors"
               onClick={() => showNotification("🐦 Join our Twitter/X jungle network!")}
             >

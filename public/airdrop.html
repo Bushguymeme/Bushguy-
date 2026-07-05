@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SURCHI Community Airdrop</title>
+  
+  <!-- Google Fonts: Space Grotesk (Display) & Inter (Body) & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti CDN for the celebration moment -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neonGreen: '#00ff88',
+            neonGreenGlow: 'rgba(0, 255, 136, 0.15)',
+            solanaPurple: '#9945FF',
+            jungleDark: '#030712',
+            cardBg: 'rgba(15, 23, 42, 0.65)',
+            cardBorder: 'rgba(255, 255, 255, 0.06)',
+            neonGreenBorder: 'rgba(0, 255, 136, 0.3)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            neon: '0 0 20px rgba(0, 255, 136, 0.25)',
+            neonStrong: '0 0 35px rgba(0, 255, 136, 0.45)',
+            purpleNeon: '0 0 20px rgba(153, 69, 255, 0.25)',
+            redNeon: '0 0 20px rgba(239, 68, 68, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar for sleek UI feel */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030712;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00ff88;
+    }
+
+    /* Floating/Pulsing Glow Anim for background depth */
+    @keyframes pulseGlow {
+      0%, 100% {
+        transform: scale(1) translate(0px, 0px);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.15) translate(30px, -20px);
+        opacity: 0.9;
+      }
+    }
+
+    .ambient-glow-1 {
+      animation: pulseGlow 15s infinite ease-in-out;
+    }
+
+    .ambient-glow-2 {
+      animation: pulseGlow 20s infinite ease-in-out reverse;
+    }
+
+    /* Glassmorphism utility card base */
+    .glass-card {
+      background: rgba(13, 20, 35, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Cyber grid overlay */
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Neon border glowing transition */
+    .glow-border {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glow-border:hover {
+      border-color: rgba(0, 255, 136, 0.35);
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-[#03060f] text-stone-100 min-h-screen font-sans antialiased overflow-x-hidden relative cyber-grid">
+
+  <!-- Ambient Glowing Background Orbs -->
+  <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+    <div class="ambient-glow-1 absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-emerald-500/10 blur-[130px]"></div>
+    <div class="ambient-glow-2 absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-purple-600/5 blur-[150px]"></div>
+    <div class="absolute top-[40%] left-[30%] w-[400px] h-[400px] rounded-full bg-emerald-600/5 blur-[120px]"></div>
+  </div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 flex flex-col min-h-screen">
+    
+    <!-- Top Nav Header -->
+    <header class="flex items-center justify-between border-b border-white/5 pb-5 mb-10">
+      <a href="/" class="flex items-center gap-2 group text-stone-400 hover:text-white transition-colors py-1.5 px-3 rounded-lg hover:bg-white/5 font-mono text-xs font-medium tracking-wider">
+        <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+        BACK TO CAMPFIRE
+      </a>
+      
+      <div class="flex items-center gap-2 py-1 px-3 rounded-full bg-emerald-950/25 border border-emerald-500/20 shadow-neon">
+        <span class="w-2 h-2 rounded-full bg-neonGreen animate-pulse"></span>
+        <span class="text-[10px] font-mono font-bold tracking-widest text-emerald-400 uppercase">AIRDROP POOL LIVE</span>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-grow space-y-12">
+      
+      <!-- HERO SECTION -->
+      <section class="text-center space-y-5">
+        <!-- Logo Display -->
+        <div class="inline-flex items-center justify-center p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-purple-500/5 border border-emerald-500/20 shadow-neon mb-2">
+          <!-- Stylized Surchi SVG Coin Logo -->
+          <svg class="w-14 h-14 text-neonGreen filter drop-shadow-[0_0_10px_rgba(0,255,136,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="4" stroke-dasharray="8 4" />
+            <circle cx="50" cy="50" r="37" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+            <!-- Inner stylized 'S' symbol -->
+            <path d="M65 35C65 35 55 25 45 25C35 25 30 31 30 38C30 46 40 48 48 50C56 52 70 54 70 64C70 74 58 75 50 75C38 75 35 65 35 65" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M50 15V22M50 78V85" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-[11px] font-mono tracking-[0.25em] text-[#9945FF] uppercase font-bold">EARLY ADOPTERS REBATE</span>
+          <h1 class="text-4xl sm:text-5xl font-display font-extrabold tracking-tight text-white">
+            SURCHI Community <span class="bg-gradient-to-r from-neonGreen via-emerald-400 to-[#9945FF] bg-clip-text text-transparent">Airdrop</span>
+          </h1>
+        </div>
+        
+        <p class="max-w-2xl mx-auto text-stone-400 text-sm sm:text-base leading-relaxed font-sans font-light">
+          Become one of the earliest SURCHI supporters. Complete the required community tasks to qualify for future rewards and exclusive ecosystem benefits.
+        </p>
+      </section>
+
+      <!-- MISSION TRACKER & PROGRESS SYSTEM -->
+      <section class="glass-card rounded-3xl p-6 sm:p-8 border border-white/5 shadow-xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-neonGreen/5 blur-[50px] rounded-full pointer-events-none"></div>
+        
+        <!-- Progress Bar Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div class="space-y-1">
+            <h3 class="text-lg font-display font-bold text-white flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-neonGreen"></i>
+              Airdrop Eligibility Tracker
+            </h3>
+            <p class="text-xs text-stone-400">Complete all missions below to activate the waitlist form.</p>
+          </div>
+          <div class="flex items-baseline gap-1.5 bg-emerald-950/30 border border-emerald-500/20 px-3.5 py-1.5 rounded-xl self-start sm:self-auto">
+            <span class="text-xs font-mono text-stone-400 uppercase tracking-wider font-bold">PROGRESS:</span>
+            <span id="progress-text" class="text-sm font-mono font-bold text-neonGreen">0/6 Completed</span>
+          </div>
+        </div>
+
+        <!-- Animated Progress Track -->
+        <div class="w-full bg-stone-900/80 rounded-full h-3 border border-white/5 overflow-hidden mb-8 relative">
+          <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-neonGreen h-full w-0 rounded-full transition-all duration-500 ease-out shadow-[0_0_12px_rgba(0,255,136,0.4)]"></div>
+        </div>
+
+        <!-- TASK GRID (6 Tasks) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Task 1 -->
+          <div onclick="completeTask(0, 'https://surchi.xyz/')" 
+               id="task-card-0" 
+               class="glow-border glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <div class="flex items-center gap-4">
+              <div id="task-status-icon-0" class="w-10 h-10 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-center shrink-0 transition-all text-stone-500 font-mono text-sm font-bold group-hover:border-neonGreen/40">
+                1
+              </div>
+              <div class="space-y-0.5">
+                <span class="text-xs font-mono text-neonGreen uppercase tracking-wider font-bold">ECOSYSTEM PORTAL</span>
+                <h4 class="text-sm font-bold text-white tracking-wide">Visit SURCHI Website</h4>
+                <p class="text-[11px] text-stone-400 leading-normal">Explore the core hub and project dashboard.</p>
+              </div>
+            </div>
+            <div id="task-action-0" class="shrink-0 text-stone-400 group-hover:text-neonGreen transition-colors flex items-center gap-1 font-mono text-[11px]">
+              <span>Visit</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+
+          <!-- Task 2 -->
+          <div onclick="completeTask(1, 'https://x.com/suchicoin')" 
+               id="task-card-1" 
+               class="glow-border glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <div class="flex items-center gap-4">
+              <div id="task-status-icon-1" class="w-10 h-10 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-center shrink-0 transition-all text-stone-500 font-mono text-sm font-bold group-hover:border-neonGreen/40">
+                2
+              </div>
+              <div class="space-y-0.5">
+                <span class="text-xs font-mono text-neonGreen uppercase tracking-wider font-bold">SOCIALS</span>
+                <h4 class="text-sm font-bold text-white tracking-wide">Follow SURCHI on X</h4>
+                <p class="text-[11px] text-stone-400 leading-normal">Join our primary broadcast network on Twitter/X.</p>
+              </div>
+            </div>
+            <div id="task-action-1" class="shrink-0 text-stone-400 group-hover:text-neonGreen transition-colors flex items-center gap-1 font-mono text-[11px]">
+              <span>Follow</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+
+          <!-- Task 3 -->
+          <div onclick="completeTask(2, 'https://t.me/SurchiWeb3Community')" 
+               id="task-card-2" 
+               class="glow-border glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <div class="flex items-center gap-4">
+              <div id="task-status-icon-2" class="w-10 h-10 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-center shrink-0 transition-all text-stone-500 font-mono text-sm font-bold group-hover:border-neonGreen/40">
+                3
+              </div>
+              <div class="space-y-0.5">
+                <span class="text-xs font-mono text-neonGreen uppercase tracking-wider font-bold">COMMUNITY CHAT</span>
+                <h4 class="text-sm font-bold text-white tracking-wide">Join SURCHI Telegram</h4>
+                <p class="text-[11px] text-stone-400 leading-normal">Enter the official global discussion community.</p>
+              </div>
+            </div>
+            <div id="task-action-2" class="shrink-0 text-stone-400 group-hover:text-neonGreen transition-colors flex items-center gap-1 font-mono text-[11px]">
+              <span>Join</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+
+          <!-- Task 4 -->
+          <div onclick="completeTask(3, 'https://discord.gg/T8sURwbcAv')" 
+               id="task-card-3" 
+               class="glow-border glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <div class="flex items-center gap-4">
+              <div id="task-status-icon-3" class="w-10 h-10 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-center shrink-0 transition-all text-stone-500 font-mono text-sm font-bold group-hover:border-neonGreen/40">
+                4
+              </div>
+              <div class="space-y-0.5">
+                <span class="text-xs font-mono text-neonGreen uppercase tracking-wider font-bold">HQ BASE</span>
+                <h4 class="text-sm font-bold text-white tracking-wide">Join SURCHI Discord</h4>
+                <p class="text-[11px] text-stone-400 leading-normal">Unlock active developer roles and announcements.</p>
+              </div>
+            </div>
+            <div id="task-action-3" class="shrink-0 text-stone-400 group-hover:text-neonGreen transition-colors flex items-center gap-1 font-mono text-[11px]">
+              <span>Join</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+
+          <!-- Task 5 -->
+          <div onclick="completeTask(4, 'https://x.com/Bushguymeme')" 
+               id="task-card-4" 
+               class="glow-border glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <div class="flex items-center gap-4">
+              <div id="task-status-icon-4" class="w-10 h-10 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-center shrink-0 transition-all text-stone-500 font-mono text-sm font-bold group-hover:border-neonGreen/40">
+                5
+              </div>
+              <div class="space-y-0.5">
+                <span class="text-xs font-mono text-neonGreen uppercase tracking-wider font-bold">ALLIANCE BROADCAST</span>
+                <h4 class="text-sm font-bold text-white tracking-wide">Follow BUSHGUY on X</h4>
+                <p class="text-[11px] text-stone-400 leading-normal">Stay paired with the Bushguy campfire network.</p>
+              </div>
+            </div>
+            <div id="task-action-4" class="shrink-0 text-stone-400 group-hover:text-neonGreen transition-colors flex items-center gap-1 font-mono text-[11px]">
+              <span>Follow</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+
+          <!-- Task 6 -->
+          <div onclick="completeTask(5, 'https://t.me/bushguymeme')" 
+               id="task-card-5" 
+               class="glow-border glass-card rounded-2xl p-4 flex items-center justify-between cursor-pointer group hover:scale-[1.01] active:scale-[0.99] transition-all">
+            <div class="flex items-center gap-4">
+              <div id="task-status-icon-5" class="w-10 h-10 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-center shrink-0 transition-all text-stone-500 font-mono text-sm font-bold group-hover:border-neonGreen/40">
+                6
+              </div>
+              <div class="space-y-0.5">
+                <span class="text-xs font-mono text-neonGreen uppercase tracking-wider font-bold">PARTNER GROUP</span>
+                <h4 class="text-sm font-bold text-white tracking-wide">Join BUSHGUY Telegram</h4>
+                <p class="text-[11px] text-stone-400 leading-normal">Step in to the local wilderness chat room.</p>
+              </div>
+            </div>
+            <div id="task-action-5" class="shrink-0 text-stone-400 group-hover:text-neonGreen transition-colors flex items-center gap-1 font-mono text-[11px]">
+              <span>Join</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CRITICAL LOGIC ACTION BUTTON -->
+        <div class="mt-10 flex flex-col items-center justify-center space-y-4 border-t border-white/5 pt-8">
+          <a id="submit-button" 
+             href="javascript:void(0)"
+             class="w-full sm:w-auto px-10 py-4 text-sm font-bold uppercase tracking-widest rounded-2xl transition-all duration-300 flex items-center justify-center gap-2.5 select-none bg-stone-800 text-stone-500 cursor-not-allowed border border-white/5"
+             aria-disabled="true">
+            <i data-lucide="lock" id="submit-button-icon" class="w-4 h-4"></i>
+            <span id="submit-button-text">JOIN WAITING LIST</span>
+          </a>
+          <p id="submit-disclaimer" class="text-xs font-mono text-stone-500 text-center tracking-wide leading-relaxed">
+            Locked. Complete all 6 tasks in sequence to unlock your waitlist submission access.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- AIRDROP BENEFITS SECTION -->
+      <section class="space-y-6">
+        <div class="text-center">
+          <h2 class="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
+            Ecosystem Supporter Benefits
+          </h2>
+          <p class="text-xs font-mono text-[#9945FF] tracking-wider uppercase mt-1">Exclusive rewards reserved for active participants</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <div class="glass-card rounded-2xl p-6 border border-white/5 space-y-3 hover:border-[#9945FF]/30 transition-all">
+            <div class="w-11 h-11 rounded-xl bg-purple-950/20 border border-purple-500/20 flex items-center justify-center text-[#9945FF]">
+              <i data-lucide="coins" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-display">Airdrop Allocation</h4>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Unlock eligibility for standard token distribution pools. Verified wallets obtain direct proportional share of SURCHI tokens prior to DEX deployment.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-white/5 space-y-3 hover:border-emerald-500/30 transition-all">
+            <div class="w-11 h-11 rounded-xl bg-emerald-950/20 border border-emerald-500/20 flex items-center justify-center text-neonGreen">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-display">Early Supporter Badge</h4>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Mint an exclusive Supporter SBT directly linked to your historical contribution. Showcase your early alignment around the SURCHI network nodes.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-white/5 space-y-3 hover:border-blue-500/30 transition-all">
+            <div class="w-11 h-11 rounded-xl bg-blue-950/20 border border-blue-500/20 flex items-center justify-center text-blue-400">
+              <i data-lucide="zap" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-display">Priority Access</h4>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Get direct whitelist guarantees for secondary platform tool launches, exclusive early beta networks, and affiliated ecosystem tokens.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-white/5 space-y-3 hover:border-[#9945FF]/30 transition-all md:col-span-1">
+            <div class="w-11 h-11 rounded-xl bg-purple-950/20 border border-purple-500/20 flex items-center justify-center text-[#9945FF]">
+              <i data-lucide="trending-up" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-display">Ecosystem Multipliers</h4>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Receive automated staking coefficient boosts within official pools. Your completed tasks register early status and yield ongoing weight modifiers.
+            </p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-white/5 space-y-3 hover:border-emerald-500/30 transition-all md:col-span-2">
+            <div class="w-11 h-11 rounded-xl bg-emerald-950/20 border border-emerald-500/20 flex items-center justify-center text-neonGreen">
+              <i data-lucide="gift" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-white font-display">Exclusive Community Perks</h4>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Gain admittance into secure Alpha networks, direct governance channels, and feedback rounds with SURCHI developers to participate actively in shaping protocol trajectories.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ELIGIBILITY & SECURITY GRIDS -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- ELIGIBILITY RULES (GLASS CARD STYLE) -->
+        <div class="glass-card rounded-2xl p-6 sm:p-8 border border-white/5 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-display font-bold text-white flex items-center gap-2">
+              <i data-lucide="info" class="w-5 h-5 text-neonGreen"></i>
+              Eligibility Guidelines
+            </h3>
+            <p class="text-xs text-stone-400 leading-relaxed">
+              Please review the basic compliance parameters carefully to ensure your distribution profile is verified successfully:
+            </p>
+            <ul class="space-y-3 pt-2">
+              <li class="flex items-start gap-3 text-xs text-stone-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen shrink-0 mt-0.5"></i>
+                <span>Strict limit of <strong>one verified wallet</strong> per real participant.</span>
+              </li>
+              <li class="flex items-start gap-3 text-xs text-stone-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen shrink-0 mt-0.5"></i>
+                <span>Only <strong>one submission</strong> is accepted per user profile.</span>
+              </li>
+              <li class="flex items-start gap-3 text-xs text-stone-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen shrink-0 mt-0.5"></i>
+                <span>Zero tolerance for <strong>sybil, bots, or automated duplicate accounts</strong>.</span>
+              </li>
+              <li class="flex items-start gap-3 text-xs text-stone-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen shrink-0 mt-0.5"></i>
+                <span>Full distribution occurs safely <strong>following final contract audit and deployment checks</strong>.</span>
+              </li>
+              <li class="flex items-start gap-3 text-xs text-stone-300">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-neonGreen shrink-0 mt-0.5"></i>
+                <span>SURCHI reserves the absolute right to disqualify duplicate, bad-faith, or fraudulent address pools.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SECURITY WARNING (RED GLOW CARD) -->
+        <div class="bg-red-950/20 border border-red-500/20 shadow-redNeon rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-display font-bold text-red-400 flex items-center gap-2">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-red-500"></i>
+              Security Warning & Safety Shield
+            </h3>
+            <p class="text-xs text-red-300/80 leading-relaxed">
+              Web3 can be highly adversarial. Stay informed and protect your digital assets by strictly checking requests:
+            </p>
+            
+            <div class="p-4 bg-black/45 rounded-xl border border-red-500/10 space-y-2">
+              <p class="text-xs font-mono font-bold text-red-400">SURCHI will NEVER request or ask for:</p>
+              <ul class="grid grid-cols-2 gap-2 text-xs font-mono text-stone-300">
+                <li class="flex items-center gap-1.5 text-red-300/95">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-red-500"></i>
+                  Seed Phrase
+                </li>
+                <li class="flex items-center gap-1.5 text-red-300/95">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-red-500"></i>
+                  Recovery Phrase
+                </li>
+                <li class="flex items-center gap-1.5 text-red-300/95">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-red-500"></i>
+                  Private Keys
+                </li>
+                <li class="flex items-center gap-1.5 text-red-300/95">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-red-500"></i>
+                  Wallet Password
+                </li>
+              </ul>
+            </div>
+
+            <p class="text-xs text-stone-400 leading-normal">
+              Keep your local environment secure, use hardware devices for significant balances, and never share critical credentials with any visual interface or agent.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- OFFICIAL LINKS SECTION -->
+      <section class="space-y-4 text-center">
+        <h3 class="text-sm font-mono text-stone-400 tracking-wider uppercase">Official Verified Channels</h3>
+        
+        <div class="flex flex-wrap justify-center gap-3.5 max-w-3xl mx-auto">
+          
+          <a href="https://surchi.xyz/" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="globe" class="w-4 h-4 text-neonGreen"></i>
+            <span>Website</span>
+          </a>
+
+          <a href="https://Whitepaper.surchi.xyz/" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="file-text" class="w-4 h-4 text-neonGreen"></i>
+            <span>Whitepaper</span>
+          </a>
+
+          <a href="https://x.com/suchicoin" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="twitter" class="w-4 h-4 text-neonGreen"></i>
+            <span>Surchi X</span>
+          </a>
+
+          <a href="https://t.me/SurchiWeb3Community" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="send" class="w-4 h-4 text-neonGreen"></i>
+            <span>Surchi Telegram</span>
+          </a>
+
+          <a href="https://discord.gg/T8sURwbcAv" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="message-square" class="w-4 h-4 text-neonGreen"></i>
+            <span>Surchi Discord</span>
+          </a>
+
+          <a href="https://x.com/Bushguymeme" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="twitter" class="w-4 h-4 text-purple-400"></i>
+            <span>BUSHGUY X</span>
+          </a>
+
+          <a href="https://t.me/bushguymeme" target="_blank" rel="noopener noreferrer" 
+             class="px-4 py-2 bg-stone-950/40 hover:bg-stone-900 border border-white/5 hover:border-emerald-500/30 rounded-xl flex items-center gap-2 text-xs text-stone-300 hover:text-white transition-all duration-300">
+            <i data-lucide="send" class="w-4 h-4 text-purple-400"></i>
+            <span>BUSHGUY Telegram</span>
+          </a>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-white/5 pt-6 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <svg class="w-5 h-5 text-neonGreen" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="5" />
+          <path d="M65 35C65 35 55 25 45 25C35 25 30 31 30 38C30 46 40 48 48 50C56 52 70 54 70 64C70 74 58 75 50 75C38 75 35 65 35 65" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="text-xs font-mono tracking-wider text-stone-500">&copy; 2026 SURCHI Protocol. All rights reserved.</span>
+      </div>
+      <div class="text-[10px] font-mono text-stone-600 text-center sm:text-right">
+        Secure SHA-256 Airdrop Vault Distribution Network.
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Lucide Icons setup
+    lucide.createIcons();
+
+    // Core Tasks Logic State
+    const totalTasks = 6;
+    let completedTasks = [false, false, false, false, false, false];
+
+    // Load state from localStorage on startup to maintain durable persistence
+    try {
+      const savedState = localStorage.getItem('surchi_completed_tasks_v1');
+      if (savedState) {
+        completedTasks = JSON.parse(savedState);
+        if (!Array.isArray(completedTasks) || completedTasks.length !== totalTasks) {
+          completedTasks = [false, false, false, false, false, false];
+        }
+      }
+    } catch (e) {
+      console.warn("Storage restore error:", e);
+    }
+
+    // Initial Render
+    updateUI();
+
+    function completeTask(index, url) {
+      if (index >= 0 && index < totalTasks) {
+        // Mark task completed
+        const isFirstComplete = !completedTasks[index];
+        completedTasks[index] = true;
+        
+        // Persist completion state
+        try {
+          localStorage.setItem('surchi_completed_tasks_v1', JSON.stringify(completedTasks));
+        } catch (e) {
+          console.error("Failed to write to localStorage:", e);
+        }
+
+        // Trigger confetti burst if this completed the entire list
+        const completedCount = completedTasks.filter(Boolean).length;
+        if (isFirstComplete && completedCount === totalTasks) {
+          triggerCelebration();
+        }
+
+        // Open official action URL in a new tab
+        window.open(url, '_blank');
+
+        // Re-render components and text layouts
+        updateUI();
+      }
+    }
+
+    function updateUI() {
+      const completedCount = completedTasks.filter(Boolean).length;
+      
+      // Update Progress text & width
+      document.getElementById('progress-text').innerText = `${completedCount}/${totalTasks} Completed`;
+      const progressPercent = (completedCount / totalTasks) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+      // Update Task Cards and Icons
+      for (let i = 0; i < totalTasks; i++) {
+        const isCompleted = completedTasks[i];
+        const card = document.getElementById(`task-card-${i}`);
+        const iconDiv = document.getElementById(`task-status-icon-${i}`);
+        const actionDiv = document.getElementById(`task-action-${i}`);
+
+        if (isCompleted) {
+          // Card complete state styling
+          card.classList.remove('glass-card', 'border-white/5');
+          card.classList.add('bg-emerald-950/20', 'border-neonGreen/45', 'shadow-neon');
+          
+          // Icon complete state styling
+          iconDiv.innerHTML = '<i data-lucide="check" class="w-5 h-5 text-neonGreen"></i>';
+          iconDiv.classList.remove('bg-stone-900/90', 'border-stone-800', 'text-stone-500');
+          iconDiv.classList.add('bg-emerald-950/80', 'border-neonGreen/40', 'text-neonGreen');
+
+          // Action text layout complete
+          actionDiv.innerHTML = '<span class="text-neonGreen font-semibold">Done</span><i data-lucide="check-circle" class="w-3.5 h-3.5 text-neonGreen"></i>';
+        } else {
+          // Reset default card states
+          card.classList.add('glass-card', 'border-white/5');
+          card.classList.remove('bg-emerald-950/20', 'border-neonGreen/45', 'shadow-neon');
+
+          // Reset default icons
+          iconDiv.innerHTML = `${i + 1}`;
+          iconDiv.classList.add('bg-stone-900/90', 'border-stone-800', 'text-stone-500');
+          iconDiv.classList.remove('bg-emerald-950/80', 'border-neonGreen/40', 'text-neonGreen');
+
+          // Reset action label
+          const actionLabels = ['Visit', 'Follow', 'Join', 'Join', 'Follow', 'Join'];
+          actionDiv.innerHTML = `<span>${actionLabels[i]}</span><i data-lucide="external-link" class="w-3.5 h-3.5"></i>`;
+        }
+      }
+
+      // Re-initialize Lucide Icons for dynamic contents
+      lucide.createIcons();
+
+      // Submit Waitlist Button Active Logic
+      const submitButton = document.getElementById('submit-button');
+      const submitButtonText = document.getElementById('submit-button-text');
+      const submitButtonIcon = document.getElementById('submit-button-icon');
+      const submitDisclaimer = document.getElementById('submit-disclaimer');
+
+      if (completedCount === totalTasks) {
+        // Unlock button
+        submitButton.href = "https://tally.so/r/LZy9MO";
+        submitButton.target = "_blank";
+        submitButton.rel = "noopener noreferrer";
+        submitButton.setAttribute('aria-disabled', 'false');
+        
+        // Active styled classes
+        submitButton.classList.remove('bg-stone-800', 'text-stone-500', 'cursor-not-allowed', 'border-white/5');
+        submitButton.classList.add('bg-gradient-to-r', 'from-neonGreen', 'to-emerald-500', 'text-stone-950', 'shadow-neonStrong', 'hover:scale-105', 'active:scale-95', 'border-transparent', 'animate-pulse');
+        
+        // Active visual contents
+        submitButtonText.innerText = "JOIN WAITING LIST NOW";
+        submitButtonIcon.setAttribute('data-lucide', 'unlock');
+        
+        // Disclaimer status text
+        submitDisclaimer.innerHTML = '🎉 <span class="text-neonGreen font-bold font-mono">ALL TASKS VERIFIED!</span> Click the button above to register your waitlist position!';
+        submitDisclaimer.classList.remove('text-stone-500');
+        submitDisclaimer.classList.add('text-stone-300');
+      } else {
+        // Keep locked state
+        submitButton.removeAttribute('href');
+        submitButton.removeAttribute('target');
+        submitButton.removeAttribute('rel');
+        submitButton.setAttribute('aria-disabled', 'true');
+        
+        // Disabled classes
+        submitButton.classList.add('bg-stone-800', 'text-stone-500', 'cursor-not-allowed', 'border-white/5');
+        submitButton.classList.remove('bg-gradient-to-r', 'from-neonGreen', 'to-emerald-500', 'text-stone-950', 'shadow-neonStrong', 'hover:scale-105', 'active:scale-95', 'border-transparent', 'animate-pulse');
+        
+        // Lock visual contents
+        submitButtonText.innerText = "JOIN WAITING LIST";
+        submitButtonIcon.setAttribute('data-lucide', 'lock');
+
+        // Disclaimer default
+        submitDisclaimer.innerHTML = `Locked. Complete all 6 tasks in sequence to unlock your waitlist submission access (${completedCount}/${totalTasks} Done).`;
+        submitDisclaimer.classList.add('text-stone-500');
+        submitDisclaimer.classList.remove('text-stone-300');
+      }
+
+      // Re-render Icons
+      lucide.createIcons();
+    }
+
+    function triggerCelebration() {
+      const duration = 4 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        // Burst green and purple particles for high-end feel
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#00ff88', '#10b981', '#9945FF']
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#00ff88', '#10b981', '#9945FF']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+  </script>
+</body>
+</html>
