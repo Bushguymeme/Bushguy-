@@ -138,30 +138,42 @@
     <main class="flex-grow space-y-12">
       
       <!-- HERO SECTION -->
-      <section class="text-center space-y-5">
-        <!-- Logo Display -->
-        <div class="inline-flex items-center justify-center p-3.5 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-purple-500/5 border border-emerald-500/20 shadow-neon mb-2">
-          <!-- Stylized Surchi SVG Coin Logo -->
-          <svg class="w-14 h-14 text-neonGreen filter drop-shadow-[0_0_10px_rgba(0,255,136,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="4" stroke-dasharray="8 4" />
-            <circle cx="50" cy="50" r="37" stroke="currentColor" stroke-width="1.5" opacity="0.5" />
-            <!-- Inner stylized 'S' symbol -->
-            <path d="M65 35C65 35 55 25 45 25C35 25 30 31 30 38C30 46 40 48 48 50C56 52 70 54 70 64C70 74 58 75 50 75C38 75 35 65 35 65" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M50 15V22M50 78V85" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
-          </svg>
-        </div>
-
-        <div class="space-y-2">
-          <span class="text-[11px] font-mono tracking-[0.25em] text-[#9945FF] uppercase font-bold">EARLY ADOPTERS REBATE</span>
-          <h1 class="text-4xl sm:text-5xl font-display font-extrabold tracking-tight text-white">
-            SURCHI Community <span class="bg-gradient-to-r from-neonGreen via-emerald-400 to-[#9945FF] bg-clip-text text-transparent">Airdrop</span>
-          </h1>
+      <div class="relative w-full rounded-3xl overflow-hidden border border-white/10 bg-stone-950/40 shadow-2xl mb-8">
+        <!-- Banner Cover Photo -->
+        <div class="relative h-48 sm:h-64 w-full overflow-hidden">
+          <img 
+            src="https://raw.githubusercontent.com/surchiai/surchiai.github.io/refs/heads/main/%20banner.png" 
+            alt="SURCHI Airdrop Banner" 
+            referrerpolicy="no-referrer"
+            class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#03060f] via-black/30 to-transparent"></div>
         </div>
         
-        <p class="max-w-2xl mx-auto text-stone-400 text-sm sm:text-base leading-relaxed font-sans font-light">
-          Become one of the earliest SURCHI supporters. Complete the required community tasks to qualify for future rewards and exclusive ecosystem benefits.
-        </p>
-      </section>
+        <!-- Logo & Title container -->
+        <div class="px-6 pb-8 pt-0 -mt-12 sm:-mt-16 flex flex-col items-center text-center relative z-10">
+          <!-- Logo Display -->
+          <div class="inline-flex items-center justify-center p-1.5 rounded-full bg-[#03060f] border-2 border-neonGreen shadow-neonStrong mb-4">
+            <img 
+              src="https://raw.githubusercontent.com/surchiai/surchiai.github.io/refs/heads/main/SURCHI%20logo.jpg" 
+              alt="SURCHI Logo" 
+              referrerpolicy="no-referrer"
+              class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-[11px] font-mono tracking-[0.25em] text-[#9945FF] uppercase font-bold">EARLY ADOPTERS REBATE</span>
+            <h1 class="text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-white">
+              SURCHI Community <span class="bg-gradient-to-r from-neonGreen via-emerald-400 to-[#9945FF] bg-clip-text text-transparent">Airdrop</span>
+            </h1>
+          </div>
+          
+          <p class="max-w-2xl mx-auto text-stone-400 text-sm sm:text-base leading-relaxed font-sans font-light mt-4">
+            Become one of the earliest SURCHI supporters. Complete the required community tasks to qualify for future rewards and exclusive ecosystem benefits.
+          </p>
+        </div>
+      </div>
 
       <!-- MISSION TRACKER & PROGRESS SYSTEM -->
       <section class="glass-card rounded-3xl p-6 sm:p-8 border border-white/5 shadow-xl relative overflow-hidden">
