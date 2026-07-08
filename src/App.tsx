@@ -25,7 +25,9 @@ import {
   Droplet,
   Car,
   Github,
-  Gift
+  Gift,
+  Twitter,
+  Send
 } from 'lucide-react';
 import { BUSH_MOMENTS, EARLY_MATH_DATA, ROADMAP_DATA, FAQ_DATA, BUSH_GUY_IMAGES, STRATEGIC_PARTNERS, FUTURE_LISTINGS } from './data.ts';
 import { BushMomentId } from './types.ts';
@@ -240,7 +242,7 @@ export default function App() {
             </div>
 
             <a
-              href="https://drive.google.com/file/d/1-b-AlbWIX0XizzkrVeNqVzS1CtJRTvOD/view?usp=drivesdk"
+              href="https://whitepaper.bushguy.xyz/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-stone-900 border border-emerald-900/60 text-solana-green transition-all hover:bg-emerald-950/40 hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5"
@@ -1214,7 +1216,7 @@ export default function App() {
             </div>
 
             <a
-              href="https://drive.google.com/file/d/1-b-AlbWIX0XizzkrVeNqVzS1CtJRTvOD/view?usp=drivesdk"
+              href="https://whitepaper.bushguy.xyz/"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 px-8 py-3.5 bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 font-extrabold rounded-2xl uppercase tracking-wider text-xs hover:scale-105 active:scale-95 transition-all shadow-lg shadow-solana-green/20 flex items-center gap-2 group"
@@ -1259,24 +1261,13 @@ export default function App() {
 
           <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-stone-400">
             <a 
-              href="https://drive.google.com/file/d/1-b-AlbWIX0XizzkrVeNqVzS1CtJRTvOD/view?usp=drivesdk"
+              href="https://whitepaper.bushguy.xyz/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-solana-green transition-colors flex items-center gap-1.5 font-bold text-solana-green"
               id="footer-whitepaper-btn"
             >
               📖 White Paper
-            </a>
-            <span className="text-stone-700">|</span>
-            <a 
-              href="https://github.com/Bushguymeme"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-solana-green transition-colors flex items-center gap-1 font-bold text-stone-300"
-              id="footer-github-btn"
-            >
-              <Github className="w-3.5 h-3.5" />
-              GitHub
             </a>
             <span className="text-stone-700">|</span>
             <a 
@@ -1289,23 +1280,38 @@ export default function App() {
               Raydium Pool
             </a>
             <span className="text-stone-700">|</span>
-            <a 
-              href="https://x.com/Bushguymeme" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-solana-green transition-colors"
-              onClick={() => showNotification("🐦 Join our Twitter/X jungle network!")}
-            >
-              Twitter/X
-            </a>
-            <span className="text-stone-700">|</span>
-            <a 
-              href="#swap" 
-              className="hover:text-solana-green transition-colors"
-              onClick={() => showNotification("💬 Enter the Telegram Basecamp Chat!")}
-            >
-              Telegram Chat
-            </a>
+            <div className="flex items-center gap-2">
+              <a 
+                href="https://github.com/Bushguymeme"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-stone-800 bg-stone-900/50 hover:bg-solana-green/10 hover:border-solana-green flex items-center justify-center text-stone-300 hover:text-solana-green transition-all"
+                title="GitHub"
+                id="footer-github-btn"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a 
+                href="https://x.com/Bushguymeme" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-stone-800 bg-stone-900/50 hover:bg-solana-green/10 hover:border-solana-green flex items-center justify-center text-stone-300 hover:text-solana-green transition-all"
+                title="Twitter/X"
+                onClick={() => showNotification("🐦 Join our Twitter/X jungle network!")}
+              >
+                <Twitter className="w-4 h-4" />
+              </a>
+              <a 
+                href="https://t.me/bushguymeme" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-stone-800 bg-stone-900/50 hover:bg-solana-green/10 hover:border-solana-green flex items-center justify-center text-stone-300 hover:text-solana-green transition-all"
+                title="Telegram"
+                onClick={() => showNotification("💬 Enter the Telegram Basecamp Chat!")}
+              >
+                <Send className="w-4 h-4" />
+              </a>
+            </div>
           </div>
 
           <div className="flex items-center gap-1 text-[11px] font-mono text-stone-500">
