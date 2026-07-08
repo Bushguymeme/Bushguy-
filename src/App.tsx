@@ -269,15 +269,7 @@ export default function App() {
               <span>Pinksale Presale</span>
             </a>
 
-            <a
-              href="/airdrop.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl bg-gradient-to-r from-solana-green to-emerald-500 text-jungle-950 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-solana-green/20 flex items-center gap-1.5"
-            >
-              <Gift className="w-3.5 h-3.5 text-jungle-950 animate-bounce shrink-0" />
-              <span>Join SURCHI Airdrop</span>
-            </a>
+
           </div>
 
         </div>
