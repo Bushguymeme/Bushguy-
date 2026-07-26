@@ -536,14 +536,17 @@ export default function App() {
                 </div>
               </div>
 
-              <button
+              <a
+                href="https://raydium.io/swap/"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => {
-                  showNotification(`🚀 Initializing Phantom Wallet swap link for ${solInvestment} SOL!`);
+                  showNotification(`🚀 Opening Raydium Swap for ${solInvestment} SOL!`);
                 }}
-                className="w-full mt-4 py-3 bg-gradient-to-r from-solana-green via-[#122b13] to-solana-purple text-white font-bold rounded-2xl uppercase tracking-wider text-xs border border-solana-green/20 shadow-lg shadow-solana-green/5 hover:opacity-95 transition-all text-center animate-pulse"
+                className="block w-full mt-4 py-3 bg-gradient-to-r from-solana-green via-[#122b13] to-solana-purple text-white font-bold rounded-2xl uppercase tracking-wider text-xs border border-solana-green/20 shadow-lg shadow-solana-green/5 hover:opacity-95 transition-all text-center animate-pulse"
               >
                 SWAP SOL FOR $BUSHGUY
-              </button>
+              </a>
             </div>
 
           </div>
